@@ -1,6 +1,6 @@
-Manifest-version: 1.0 
-main-Class:login
-Created-by: System Gregory PC 
+Manifest-Version: 1.0 
+Main-Class: login
+Created-By: System Gregory PC 
 
 
 
