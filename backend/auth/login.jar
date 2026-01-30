@@ -1,1 +1,12 @@
-in
+cd ruta-app-plataform
+
+mkdir  -p backend/auth
+
+mv login.jar blacken/auth/
+
+git add blackend/auth/login.jar
+
+git commit -m "Implementacion de nucleo de seguridad JAR System Gregory PC"
+
+git push erigin main 
+
