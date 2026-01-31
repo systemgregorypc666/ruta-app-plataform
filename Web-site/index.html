@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RUTA-APP | Solicite su traslado en linea / Unete a la red RUTA.app  </title>
+    <title>RUTA-APP | Solicite su traslado en linea / Unete a la red RUTA.app</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; background-color: #1a1a1a; color: white; text-align: center; }
         header { background: #f1c40f; color: black; padding: 20px; }
         .container { padding: 40px 20px; }
         .card { background: #333; border-radius: 10px; padding: 20px; margin: 15px auto; max-width: 400px; border-left: 5px solid #f1c40f; }
         h1 { margin: 0; font-size: 24px; }
-        .btn { display: inline-block; background: #f1c40f; color: black; padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 5px; margin-top: 20px; }
+        .btn { display: inline-block; background: #f1c40f; color: black; padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 5px; margin-top: 20px; cursor: pointer; border: none; }
         .footer { font-size: 12px; color: #777; margin-top: 50px; }
+        
+        /* Estilos para el Login de Socio */
+        input { width: 90%; padding: 12px; margin: 10px 0; border-radius: 5px; border: none; }
+        .login-card { background: #222; border: 2px solid #f1c40f; }
     </style>
 </head>
 <body>
@@ -22,6 +26,14 @@
 </header>
 
 <div class="container">
+    <div class="card login-card">
+        <h3>🔐 Acceso de Socios (System Gregory PC)</h3>
+        <p>Ingrese sus credenciales para el Panel de Control</p>
+        <input type="text" id="user" placeholder="Usuario Socio">
+        <input type="password" id="pass" placeholder="Clave de Seguridad">
+        <button type="button" onclick="guardarYEntrar()" class="btn">ENTRAR AL PANEL</button>
+    </div>
+
     <h2>Soluciones Digitales</h2>
     
     <div class="card">
@@ -30,34 +42,12 @@
     </div>
 
     <div class="card">
-        <h3>🏍️ Mototaxis</h3>
-        <p>Sistema de despacho rápido para máxima eficiencia en la ciudad.</p>
-    </div>
-
-    <div class="card">
-        <h3>📱 Particulares</h3>
-        <p>Conecta usuarios con conductores confiables de forma segura.</p>
+        <h3>🤝 Alianza Estratégica</h3>
+        <p>¿Eres conductor? Únete a la <b>Flota Manada</b> y digitaliza tu servicio con el respaldo de <b>System Gregory PC</b>.</p>
     </div>
 
     <a href="https://wa.me/584161177334" class="btn">SOLICITAR AFILIACIÓN</a>
 </div>
-
-
-    <div class="container">
-    <h2>Soluciones Digitales de Transporte</h2>
-    
-    <div class="card">
-        <h3>🚕 Solicite su Servicio en Línea</h3>
-        <p>Conectamos a los mejores conductores de San Cristóbal con pasajeros que buscan seguridad y rapidez. La tecnología de <b>Ruta-App</b> garantiza un traslado eficiente.</p>
-        <a href="https://ruta-app-plataform.pages.dev/solicite" class="btn">SOLICITAR TRASLADO AHORA</a>
-    </div>
-
-    <div class="card" style="border-left-color: #ffffff;">
-        <h3>🤝 Alianza Estratégica</h3>
-        <p>¿Eres conductor? Únete a la <b>Flota Manada</b> y digitaliza tu servicio con el respaldo de <b>System Gregory PC</b>.</p>
-    </div>
-</div>
-
 
 <div class="footer">
     <p>Desarrollado por System Gregory PC<br>
@@ -65,6 +55,45 @@
     © 2026 San Cristóbal, Venezuela</p>
 </div>
 
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDPDo3QQlGOkKf_lM54sW06xhQ8mpQ2ZWs",
+        authDomain: "ruta-b5037.firebaseapp.com",
+        projectId: "ruta-b5037",
+        storageBucket: "ruta-b5037.firebasestorage.app",
+        messagingSenderId: "1091925976782",
+        appId: "1:1091925976782:web:212de5e574651523b3d29f",
+        measurementId: "G-VSE5S7KT9G"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    window.guardarYEntrar = function() {
+        const user = document.getElementById("user").value;
+        const pass = document.getElementById("pass").value;
+
+        if(user === "" || pass === "") {
+            alert("Por favor, complete los datos.");
+            return;
+        }
+
+        set(ref(db, 'socios/' + user), {
+            usuario: user,
+            clave: pass,
+            fecha: new Date().toLocaleString(),
+            proyecto: "Ruta-App Internacional"
+        }).then(() => {
+            // Una vez guardado en Google, vamos al panel
+            window.location.href = "panel-control.html";
+        }).catch((error) => {
+            alert("Error de conexión: " + error.message);
+        });
+    }
+</script>
+
 </body>
 </html>
-
