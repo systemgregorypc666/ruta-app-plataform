@@ -37,7 +37,7 @@ Para iniciar el módulo de seguridad en el servidor local, utilice el comando:
 `java -jar login.jar`
 
 ---
-*Investigación y Desarrollo aplicado al transporte de San Cristóbal. Caracas  para toda venezuela y internacional .*
+*Investigación y Desarrollo aplicado al transporte de San Cristóbal, Caracas  para toda venezuela y internacional .**
 
 
 
